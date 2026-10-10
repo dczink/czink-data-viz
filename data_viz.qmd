@@ -1,0 +1,350 @@
+---
+title: "9041 Data Visualization Assignment"
+author: Dan Czink
+date: 10-09-2026
+format: 
+    html:
+      toc: true
+      code-fold: true
+      code-summary: "Show code"
+      df-print: paged
+execute:
+    echo: false
+    warning: false
+---
+
+```{r, Install packages if needed}
+#| output: FALSE
+#| 
+# install.packages("tidyverse")
+# install.packages("psych")
+# install.packages("ggplot2")
+# install.packages("janitor")
+# install.packages("patchwork")
+
+```
+
+```{r, Load packages}
+#| output: FALSE
+#| 
+library(tidyverse)
+library(psych)
+library(ggplot2)
+library(janitor)
+library(patchwork)
+
+```
+
+```{r, Load data}
+#| output: FALSE
+
+whole.data <- read.csv("./games.csv")
+
+```
+
+```{r, Clean and select data}
+#| output: FALSE
+
+data.clean <- whole.data |>
+  
+  # select the relevant variables
+  select(name, # name of game
+         release_year, # year of game release
+         min_ram_gb, # minimum required ram to run game in gigabytes
+         min_gpu_g3d, # minimum required graphics benchmark
+  ) |>
+  
+  #convert to snake case to stop the number issue
+  # also removes all apostrophes, colons, periods and dashes so the next function stops being weird
+  mutate(name = make_clean_names(name)) |>
+  
+  # create a column to separate CD Projekt RED games and other
+  mutate(dev = case_when(name == "the_witcher_3_wild_hunt" |
+                           name == "the_witcher_2_assassins_of_kings" |
+                           name == "the_witcher" |
+                           name == "the_witcher_3_wild_hunt_hearts_of_stone" |
+                           name == "the_witcher_3_wild_hunt_blood_and_wine" |
+                           name == "the_witcher_2_assassins_of_kings_enhanced_edition" |
+                           name == "thronebreaker_the_witcher_tales" |
+                           name == "gwent_the_witcher_card_game" |
+                           name == "the_witcher_enhanced_edition_directors_cut" |
+                           name == "the_witcher_adventure_game" |
+                           name == "the_witcher_3_wild_hunt_new_quest_where_the_cat_and_wolf_play" |
+                           name == "the_witcher_3_wild_hunt_new_quest_contract_skelliges_most_wanted" |
+                           name == "the_witcher_3_wild_hunt_new_quest_fools_gold" |
+                           name == "the_witcher_3_wild_hunt_new_quest_contract_missing_miners" |
+                           name == "reigns_the_witcher" |
+                           name == "the_witcher_3_wild_hunt_new_quest_scavenger_hunt_wolf_school_gear" |
+                           name == "cyberpunk_2077" |
+                           name == "cyberpunk_2077_phantom_liberty"
+                       ~ "CDPR", TRUE ~ "Other")) |>
+  
+  # convert a few older game observations mistakenly recorded in mb to gb
+  mutate(min_ram_gb = case_when(min_ram_gb >= 32 & name != "under_a_desert_sun" ~ min_ram_gb / 1000, TRUE ~ min_ram_gb))
+
+# make a new dataframe with only non-CD Projekt RED games
+other.dev <- data.clean |> 
+  filter(dev == "Other")
+
+# select only the years relevent for the 4 CD Projekt RED games
+other.dev.year <- other.dev |>
+  filter(release_year == 2007 |
+           release_year == 2011 |
+           release_year == 2015 |
+           release_year == 2020)
+  
+other.dev.year$release_year <- as.factor(other.dev.year$release_year)
+
+#select only the main base-games from CD Projekt RED, no DLC or spinoff games
+cdpr.dev <- data.clean |>
+  filter(name == "the_witcher_3_wild_hunt" |
+           name == "the_witcher_2_assassins_of_kings" |
+           name == "the_witcher" |
+           name == "cyberpunk_2077")
+
+cdpr.dev$release_year <- as.factor(cdpr.dev$release_year)
+
+```
+
+```{r, Describe by group}
+#| output: FALSE
+
+# computes descriptive statistics for each group, transforms into a matrix
+descriptives <- describe(other.dev) |>
+  mutate_if(is.numeric, round, 2)
+
+descriptives.year <- describeBy(other.dev.year, group = other.dev.year$release_year, mat = TRUE, digits = 2)
+
+```
+
+```{r, Scatterplot for GPU vs RAM requirements across all games}
+#| output: FALSE
+#| 
+journal.scatter <- ggplot() +
+ geom_jitter(data = other.dev, aes(x = min_gpu_g3d, 
+                                   y = min_ram_gb), 
+             alpha = 0.3,
+             height = 0.5, 
+             width = 0.5,
+             colour = "gray") +
+  geom_point(data = cdpr.dev, aes(x = min_gpu_g3d, 
+                                  y = min_ram_gb,
+                                  shape = name), 
+             colour = "black") +
+  theme_classic() +
+  labs(title = "Scatterplot of Minimum GPU and CPU for CD Project RED Against Other Games",
+       x = "Minimum Required GPU Benchmark Score", 
+       y = "Minimum REquired RAM in GB", 
+       shape = "CD Projekt RED Games") 
+
+```
+
+```{r, Combined Boxplot for GPU and RAM}
+#| output: FALSE
+
+gpu.comb.boxplot <- ggplot() +
+  geom_boxplot(data = other.dev, aes(x = dev,
+                                     y = min_gpu_g3d), colour = "black") +
+  geom_point(data = cdpr.dev, aes(x = dev,
+                                  y = min_gpu_g3d,
+                                  shape = name)) +
+  theme_classic() +
+  labs(title = "Boxplot of Minimum GPU for CD Projekt RED Against Other Games",
+       x = "Developer", 
+       y = "Minimum Required GPU Benchmark Score", 
+       shape = "CD Projekt RED Games") 
+
+ram.comb.boxplot <- ggplot() +
+  geom_boxplot(data = other.dev, aes(x = dev, 
+                                          y = min_ram_gb), colour = "black") +
+  geom_point(data = cdpr.dev, aes(x = dev, 
+                                  y = min_ram_gb,
+                                  shape = name)) +
+  theme_classic() +
+  labs(title = "Boxplot of Minimum RAM for CD Projekt RED Against Other Games",
+       x = "Developer", 
+       y = "Minimum Required RAM (gb)", 
+       shape = "CD Projekt RED Games") 
+
+journal.comb.boxplot <- gpu.comb.boxplot / ram.comb.boxplot
+
+```
+
+```{r, Combined Boxplot for GPU and RAM by year}
+#| output: FALSE
+
+gpu.boxplot <- ggplot() +
+  geom_boxplot(data = other.dev.year, aes(x = release_year, 
+                                     y = min_gpu_g3d), colour = "gray") +
+  geom_point(data = cdpr.dev, aes(x = release_year, 
+                                  y = min_gpu_g3d,
+                                  shape = name)) +
+  theme_classic() +
+  labs(title = "Boxplot of Minimum GPU for CD Projekt RED Against Other Games in the Release Year",
+       x = "Game Release Year", 
+       y = "Minimum Required GPU Benchmark Score", 
+       shape = "CD Projekt RED Games") 
+
+ram.boxplot <- ggplot() +
+  geom_boxplot(data = other.dev.year, aes(x = release_year, 
+                                          y = min_ram_gb), colour = "gray") +
+  geom_point(data = cdpr.dev, aes(x = release_year, 
+                                  y = min_ram_gb,
+                                  shape = name)) +
+  theme_classic() +
+  labs(title = "Boxplot of Minimum RAM for CD Projekt RED Against Other Games in the Release Year",
+       x = "Game Release Year", 
+       y = "Minimum Required RAM (gb)", 
+       shape = "CD Projekt RED Games") 
+
+journal.boxplot <- gpu.boxplot / ram.boxplot
+
+```
+
+```{r, For the massses: Scatterplot for GPU vs RAM requirements across all games}
+#| output: FALSE
+#| 
+masses.scatter <- ggplot() +
+  geom_jitter(data = other.dev, aes(x = min_gpu_g3d, 
+                                    y = min_ram_gb), 
+              alpha = 0.5,
+              height = 0.5, 
+              width = 0.5,
+              colour = "pink") +
+  geom_text(data = cdpr.dev, aes(x = min_gpu_g3d, 
+                                  y = min_ram_gb), 
+            label = c("Witcher3", "CP2077", "Witcher2", "Witcher"), 
+            colour = "black") +
+  theme_classic() +
+  labs(title = "Minimum Graphics and Memory Requirements Increase Together and Most Requirements are Low",
+       subtitle = "The Case for both CD Projekt RED and Other Developer Games",
+       x = "Minimum Required Graphics Benchmark Score", 
+       y = "Minimum Required Memory")
+
+```
+
+```{r, For the masses: Combined Boxplot for GPU and RAM}
+#| output: FALSE
+
+gpu.comb.boxplot2 <- ggplot() +
+  geom_boxplot(data = other.dev, aes(x = dev,
+                                     y = min_gpu_g3d), fill = "pink") +
+  geom_text(data = cdpr.dev, aes(x = dev, 
+                                 y = min_gpu_g3d), 
+            label = c("Witcher3", "CP2077", "Witcher2", "Witcher"), 
+            colour = "black") +
+  theme_classic() +
+  labs(title = "Newer CDPR Games Require Higher Graphics Benchmarks and Memory than Other Games",
+       subtitle = "Older CD Projekt RED Games Require the Same or Slightly Less",
+       x = "Game Developer", 
+       y = "Minimum Required Graphics Benchmark Score")
+
+ram.comb.boxplot2 <- ggplot() +
+  geom_boxplot(data = other.dev, aes(x = dev, 
+                                     y = min_ram_gb), fill = "pink") +
+  geom_text(data = cdpr.dev, aes(x = dev, 
+                                 y = min_ram_gb), 
+            label = c("Witcher3", "CP2077", "Witcher2", "Witcher"), 
+            colour = "black") +
+  theme_classic() +
+  labs(x = "Game Developer", 
+       y = "Minimum Required Memory")
+
+masses.comb.boxplot <- gpu.comb.boxplot2 / ram.comb.boxplot2
+
+```
+
+```{r, For the masses: Combined Boxplot for GPU and RAM by year}
+#| output: FALSE
+
+gpu.boxplot2 <- ggplot() +
+  geom_boxplot(data = other.dev.year, aes(x = release_year, 
+                                          y = min_gpu_g3d), colour = "pink") +
+  geom_text(data = cdpr.dev, aes(x = release_year, 
+                                 y = min_gpu_g3d), 
+            label = c("Witcher3", "CP2077", "Witcher2", "Witcher"), 
+            colour = "black") +
+  theme_classic() +
+  labs(title = "Even Within the Same Release Year, Newer CD ProJekt RED Game Requirements Surpass Others",
+       subtitle = "Older CD Projekt RED Requirements are on Par with Others in Their Release Year",
+       x = "Game Release Year", 
+       y = "Minimum Required Graphics Benchmark Score") 
+
+ram.boxplot2 <- ggplot() +
+  geom_boxplot(data = other.dev.year, aes(x = release_year, 
+                                          y = min_ram_gb), colour = "pink") +
+  geom_text(data = cdpr.dev, aes(x = release_year, 
+                                 y = min_ram_gb), 
+            label = c("Witcher3", "CP2077", "Witcher2", "Witcher"), 
+            colour = "black") +
+  theme_classic() +
+  labs(x = "Game Release Year", 
+       y = "Minimum Required Memory") 
+
+masses.boxplot <- gpu.boxplot2 / ram.boxplot2
+
+```
+
+## Story Summary
+
+Cd Projekt RED developed video games are widely known to have hafty expectations for computer hardware in order to play them to the maximum experience, but how do these games compare to the broad requirements across games? This HTML will outline the comparison of RAM (temporary story capacity) and GPU benchmarks (graphics rendering performance) minimum requirements for four popular CD Projekt RED base games against more than 17000 games using an open dataset by PCGameBenchmarks (2026). As developers were not included in the dataset, games were manually identified using the developer website and Steam store pages. Overall RAM and GPU requirements increased together for all games. The first of the two games, The Witcher and The Witcher 2: Assasins of Kings, fell close to the median of non-CD Prokekt RED games, while the later two games, The Witcher 3: The Wild Hunt and Cyberpunk 2077 were far above in both requirements. This pattern held even when each was compared directly to games released in the same year. 
+
+## Version A: Scientific Article
+
+### Dataset
+
+The PC Game System Requirements & Estimated FPS by GPU dataset by PCGameBenchmarks (2026) contains `{r} nrow(data.clean)` games and various system requirements for each. Name, release year, minimum RAM and minimum GPU G3D benchmark score were selected for visualization. 
+
+### Data Preparation
+
+Eighteen total CD Projekt RED games were verified using their Steam store pages, though after DLC and other smaller spinoff games were removed for redundancy, `{r} nrow(cdpr.dev)` base games were visualized and compared to `{r} nrow(other.dev)` other games. 
+
+The following scatterplot shows that RAM requirements generally increase alongside GPU benchmark requirements, reflecting the overall demands of the game in both graphics rendering and short term memory storage. The Majority of the data clusters under 10GB or RAM and an approximate 7000 benchmark score. The CD Projekt RED games generally fall within these clusters, with the exception of Cyberpunk 2077 which while not alone, rests in a more sparse area. 
+
+```{r} 
+journal.scatter
+```
+
+WAs shown in the boxplot below, when compared to the median of of the other games, GPU benchmark requirements of the CD Projekt RED games were lower for older games such as the Witcher and the Witcher 2, though again much higher for the Witcher 3 and Cyberpunk 2077. 
+When compared to the median of of the other games, RAM requirements of the CD Projekt RED games were on par for older games such as the Witcher and the Witcher 2, though 3 to 6 times higher for the Witcher 3 and Cyberpunk 2077. 
+
+```{r} 
+journal.comb.boxplot
+```
+
+This pattern held for the comparison against games released in the same year. As shown in the boxplots below, The Witcher was on par with the median for 2007 games for both GPU and RAM. While The Witcher 2 was on the median for GPU requirements compared to other 2011 games, the RAM requirements were much higher. As with the previous plot, The witcher 3 and Cyberpunk 2077 were both substantially higher than the median for both RAM and GPU requirements for their respective years, showing that the requirements are not only large when compared with all games, but even within their release year. 
+
+```{r} 
+journal.boxplot
+```
+
+## Version B: Accessible / Dynamic Outlet
+
+Hardware requirements are important to be met in order to get the best gameplay possible and reduce lag. CD Projekt RED games such as the Witcher series and Cyberpunk 2077 are often touted as hefty games with hefty requirements, but is that really the case?
+
+It is well known that the larger the game and more beautiful the graphics, the better computer hardware you will need. Below, we show that most of the time, a game that requires a better grahics card will generally also need more RAM. CD Projekt RED games fall into this pattern, but overll most game requirements cluster low. 
+
+
+```{r} 
+masses.scatter
+```
+
+But when compared to all games overall, older CD Projekt RED games fall about the same level as the broader average, while newer games such as the Witcher 3 and Cyberpunk 2077 fall far above. 
+
+```{r} 
+masses.comb.boxplot
+```
+
+Finally, older CD Projekt RED games tend to be on par with other games of their year, while new games like the Witcher 3 and Cyberpunk 2077 are hefty requirements even for their release year. 
+
+```{r} 
+masses.boxplot
+```
+
+## Data / Source Note
+
+The PC Game System Requirements & Estimated FPS by GPU dataset by PCGameBenchmarks (2026) and can be found at https://zenodo.org/records/23162309?preview_file=games.csv or https://github.com/emilioagustin83/pc-game-fps-dataset. 
+
+The full citation is 
+
+PCGameBenchmarks. (2026). PC Game System Requirements & Estimated FPS by GPU (Versions 2026-10-03) [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.23162309

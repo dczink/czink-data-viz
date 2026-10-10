@@ -1,0 +1,100 @@
+[
+  {
+    "objectID": "data_viz.html",
+    "href": "data_viz.html",
+    "title": "9041 Data Visualization Assignment",
+    "section": "",
+    "text": "Cd Projekt RED developed video games are widely known to have hafty expectations for computer hardware in order to play them to the maximum experience, but how do these games compare to the broad requirements across games? This HTML will outline the comparison of RAM (temporary story capacity) and GPU benchmarks (graphics rendering performance) minimum requirements for four popular CD Projekt RED base games against more than 17000 games using an open dataset by PCGameBenchmarks (2026). As developers were not included in the dataset, games were manually identified using the developer website and Steam store pages. Overall RAM and GPU requirements increased together for all games. The first of the two games, The Witcher and The Witcher 2: Assasins of Kings, fell close to the median of non-CD Prokekt RED games, while the later two games, The Witcher 3: The Wild Hunt and Cyberpunk 2077 were far above in both requirements. This pattern held even when each was compared directly to games released in the same year."
+  },
+  {
+    "objectID": "data_viz.html#story-summary",
+    "href": "data_viz.html#story-summary",
+    "title": "9041 Data Visualization Assignment",
+    "section": "",
+    "text": "Cd Projekt RED developed video games are widely known to have hafty expectations for computer hardware in order to play them to the maximum experience, but how do these games compare to the broad requirements across games? This HTML will outline the comparison of RAM (temporary story capacity) and GPU benchmarks (graphics rendering performance) minimum requirements for four popular CD Projekt RED base games against more than 17000 games using an open dataset by PCGameBenchmarks (2026). As developers were not included in the dataset, games were manually identified using the developer website and Steam store pages. Overall RAM and GPU requirements increased together for all games. The first of the two games, The Witcher and The Witcher 2: Assasins of Kings, fell close to the median of non-CD Prokekt RED games, while the later two games, The Witcher 3: The Wild Hunt and Cyberpunk 2077 were far above in both requirements. This pattern held even when each was compared directly to games released in the same year."
+  },
+  {
+    "objectID": "data_viz.html#version-a-scientific-article",
+    "href": "data_viz.html#version-a-scientific-article",
+    "title": "9041 Data Visualization Assignment",
+    "section": "Version A: Scientific Article",
+    "text": "Version A: Scientific Article\n\nDataset\nThe PC Game System Requirements & Estimated FPS by GPU dataset by PCGameBenchmarks (2026) contains 17412 games and various system requirements for each. Name, release year, minimum RAM and minimum GPU G3D benchmark score were selected for visualization.\n\n\nData Preparation\nEighteen total CD Projekt RED games were verified using their Steam store pages, though after DLC and other smaller spinoff games were removed for redundancy, 4 base games were visualized and compared to 17394 other games.\nThe following scatterplot shows that RAM requirements generally increase alongside GPU benchmark requirements, reflecting the overall demands of the game in both graphics rendering and short term memory storage. The Majority of the data clusters under 10GB or RAM and an approximate 7000 benchmark score. The CD Projekt RED games generally fall within these clusters, with the exception of Cyberpunk 2077 which while not alone, rests in a more sparse area.\n\n\n\n\n\n\n\n\n\nWAs shown in the boxplot below, when compared to the median of of the other games, GPU benchmark requirements of the CD Projekt RED games were lower for older games such as the Witcher and the Witcher 2, though again much higher for the Witcher 3 and Cyberpunk 2077. When compared to the median of of the other games, RAM requirements of the CD Projekt RED games were on par for older games such as the Witcher and the Witcher 2, though 3 to 6 times higher for the Witcher 3 and Cyberpunk 2077.\n\n\n\n\n\n\n\n\n\nThis pattern held for the comparison against games released in the same year. As shown in the boxplots below, The Witcher was on par with the median for 2007 games for both GPU and RAM. While The Witcher 2 was on the median for GPU requirements compared to other 2011 games, the RAM requirements were much higher. As with the previous plot, The witcher 3 and Cyberpunk 2077 were both substantially higher than the median for both RAM and GPU requirements for their respective years, showing that the requirements are not only large when compared with all games, but even within their release year."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html",
+    "href": "Data Viz Assignment Instructions.html",
+    "title": "Data Viz",
+    "section": "",
+    "text": "The goal of this assignment is not simply to make several good-looking graphs. Your goal is to use a sequence of visualizations to communicate an empirical story: to guide a reader through a question, pattern, comparison, complication, or resolution in a deliberate order.\nA useful test: if your figures could be rearranged in any order without changing the meaning of the presentation, you probably have a collection of plots rather than a data story.\nYou will then tell the same underlying story twice. The evidence should remain the same, but your design choices, level of technical detail, prose, annotations, and use of interactivity should reflect two different communication settings:\n\nA scientific article\nAn accessible/dynamic web-based outlet\n\nAt least two substantive data visualizations are required in each version.\n\n\n\n\nBy completing this assignment, you should be able to:\n\nIdentify a clear empirical message in a dataset and organize evidence into a coherent narrative arc.\nCreate multiple visualizations that perform distinct jobs within that narrative rather than redundantly displaying the same result.\nUse R to produce polished, reproducible data visualizations and a rendered web document.\nAdapt visualization design and explanatory text to different audiences and publication contexts.\nDistinguish scientific precision and technical reporting from public-facing clarity, accessibility, and engagement.\nUse Git and GitHub to make the complete analysis reproducible and GitHub Pages to publish the finished work."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#purpose",
+    "href": "Data Viz Assignment Instructions.html#purpose",
+    "title": "Data Viz",
+    "section": "",
+    "text": "The goal of this assignment is not simply to make several good-looking graphs. Your goal is to use a sequence of visualizations to communicate an empirical story: to guide a reader through a question, pattern, comparison, complication, or resolution in a deliberate order.\nA useful test: if your figures could be rearranged in any order without changing the meaning of the presentation, you probably have a collection of plots rather than a data story.\nYou will then tell the same underlying story twice. The evidence should remain the same, but your design choices, level of technical detail, prose, annotations, and use of interactivity should reflect two different communication settings:\n\nA scientific article\nAn accessible/dynamic web-based outlet\n\nAt least two substantive data visualizations are required in each version."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#learning-goals",
+    "href": "Data Viz Assignment Instructions.html#learning-goals",
+    "title": "Data Viz",
+    "section": "",
+    "text": "By completing this assignment, you should be able to:\n\nIdentify a clear empirical message in a dataset and organize evidence into a coherent narrative arc.\nCreate multiple visualizations that perform distinct jobs within that narrative rather than redundantly displaying the same result.\nUse R to produce polished, reproducible data visualizations and a rendered web document.\nAdapt visualization design and explanatory text to different audiences and publication contexts.\nDistinguish scientific precision and technical reporting from public-facing clarity, accessibility, and engagement.\nUse Git and GitHub to make the complete analysis reproducible and GitHub Pages to publish the finished work."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#version-a-scientific-article",
+    "href": "Data Viz Assignment Instructions.html#version-a-scientific-article",
+    "title": "Data Viz",
+    "section": "Version A: Scientific Article",
+    "text": "Version A: Scientific Article\nPresent your story as though the figures and accompanying text were being prepared for a conventional scientific journal article.\nPrioritize precision, interpretability, reproducibility, and technical completeness.\nYour scientific version should generally:\n\nUse static figures.\nBe fully interpretable in black-and-white or greyscale as is often required by scientific journals. Do not rely on colour to encode essential information.\nUse conventional scientific labels, units, scales, legends/direct labels, and figure captions as appropriate.\nReport technical information needed to interpret the visualization—for example, sample sizes, uncertainty, model quantities, or definitions where relevant.\nKeep decorative elements restrained. The visual hierarchy should emphasize the data and the scientific point.\nUse prose appropriate for a scientifically literate reader. Technical terminology is appropriate when it improves precision."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#version-b-accessible-dynamic-outlet",
+    "href": "Data Viz Assignment Instructions.html#version-b-accessible-dynamic-outlet",
+    "title": "Data Viz",
+    "section": "Version B: Accessible / Dynamic Outlet",
+    "text": "Version B: Accessible / Dynamic Outlet\nNow present the same empirical story for an audience encountering it through an engaging web article, explainer, or similar public-facing medium.\nPrioritize clarity, accessibility, narrative flow, and reader engagement without changing or overstating the evidence.\nYour accessible/dynamic version might:\n\nUse plain-language, takeaway-oriented headings and explanatory text.\nUse colour, highlighting, direct annotation, icons, small multiples, or other design devices when they help guide attention.\nUse interactive or dynamic elements—for example, tooltips, filters, animation, or plotly—when they add genuine explanatory value. Interactivity is cool, but is not required for its own sake.\nReduce unnecessary technical detail in the main visual display while preserving enough context for the claims to be understood accurately.\nMake deliberate accessibility choices: readable text, sufficient contrast, sensible colour use, clear labels, and alternatives to colour-only encoding.\nThink about pacing. Guide the reader through the evidence rather than confronting them with all available information at once.\n\n\nImportant: Adaptation Is Not Decoration\nThe two versions should not simply be identical figures with a different ggplot2 theme applied.\nYour choices should demonstrate that you understand how audience and medium change what information is foregrounded, how it is explained, and how the reader’s attention is directed, while the underlying empirical claims remain consistent."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#good-authority-republicans-fascination-with-testosterone-in-three-charts",
+    "href": "Data Viz Assignment Instructions.html#good-authority-republicans-fascination-with-testosterone-in-three-charts",
+    "title": "Data Viz",
+    "section": "1. Good Authority: Republicans’ Fascination with Testosterone, in Three Charts",
+    "text": "1. Good Authority: Republicans’ Fascination with Testosterone, in Three Charts\nhttps://goodauthority.org/news/republicans-fascination-with-testosterone-in-three-charts/\nThis is close to the scope of the story expected for this assignment.\nPay particular attention to how three relatively conventional plots become an argument through sequencing. Each visualization answers or develops something raised by the previous one, while the prose explains why the next piece of evidence matters.\nNotice that the effectiveness of the piece does not depend on technically elaborate visualizations. The strength comes from deciding:\nWhat should the reader see first? What question does that create? What evidence should they see next?"
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#the-economist-the-banana-index",
+    "href": "Data Viz Assignment Instructions.html#the-economist-the-banana-index",
+    "title": "Data Viz",
+    "section": "2. The Economist: The Banana Index",
+    "text": "2. The Economist: The Banana Index\nData and materials:\nhttps://github.com/TheEconomist/banana-index-data\nThis example illustrates how repeating a visual grammar while changing the analytical perspective can itself tell a story.\nThe comparison changes depending on how the environmental impact of food is evaluated—for example, relative to weight, calories, or protein.\nPay attention to how holding much of the visual form constant makes it easier for the reader to focus on the thing that is changing: the basis of comparison.\nThis is also an excellent example of making a potentially technical measurement issue intuitive and visually accessible."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#the-pudding-is-the-love-song-dying",
+    "href": "Data Viz Assignment Instructions.html#the-pudding-is-the-love-song-dying",
+    "title": "Data Viz",
+    "section": "3. The Pudding: Is the Love Song Dying?",
+    "text": "3. The Pudding: Is the Love Song Dying?\nhttps://pudding.cool/2024/11/love-songs/\nConsider this an aspirational example of public-facing data storytelling.\nYou are not expected to reproduce the sophistication of its web development.\nInstead, pay attention to:\n\npacing;\nprogressive disclosure;\nannotation;\ninteractivity where it is relevant and useful;\naccessible language;\ntransitions between pieces of evidence; and\nhow successive visualizations set up, qualify, or reinterpret the initial claim.\n\nThink about when the authors choose to show each piece of information rather than merely what visualization technique they use."
+  },
+  {
+    "objectID": "Data Viz Assignment Instructions.html#learning-from-the-exemplars",
+    "href": "Data Viz Assignment Instructions.html#learning-from-the-exemplars",
+    "title": "Data Viz",
+    "section": "Learning from the Exemplars",
+    "text": "Learning from the Exemplars\nDo not imitate these examples mechanically.\nInstead, use them to study how authors decide:\nWhat does the reader see first?\nWhat question or tension does that create?\nWhat evidence comes next?\nHow does that evidence change what the reader thinks about the previous visualization?\nWhat should the reader conclude by the end?\nThat sequence—not simply the number or attractiveness of the plots—is what turns several visualizations into a data story."
+  },
+  {
+    "objectID": "data_viz.html#version-b-accessible-dynamic-outlet",
+    "href": "data_viz.html#version-b-accessible-dynamic-outlet",
+    "title": "9041 Data Visualization Assignment",
+    "section": "Version B: Accessible / Dynamic Outlet",
+    "text": "Version B: Accessible / Dynamic Outlet\nHardware requirements are important to be met in order to get the best gameplay possible and reduce lag. CD Projekt RED games such as the Witcher series and Cyberpunk 2077 are often touted as hefty games with hefty requirements, but is that really the case?\nIt is well known that the larger the game and more beautiful the graphics, the better computer hardware you will need. Below, we show that most of the time, a game that requires a better grahics card will generally also need more RAM. CD Projekt RED games fall into this pattern, but overll most game requirements cluster low.\n\n\n\n\n\n\n\n\n\nBut when compared to all games overall, older CD Projekt RED games fall about the same level as the broader average, while newer games such as the Witcher 3 and Cyberpunk 2077 fall far above.\n\n\n\n\n\n\n\n\n\nFinally, older CD Projekt RED games tend to be on par with other games of their year, while new games like the Witcher 3 and Cyberpunk 2077 are hefty requirements even for their release year."
+  },
+  {
+    "objectID": "data_viz.html#data-source-note",
+    "href": "data_viz.html#data-source-note",
+    "title": "9041 Data Visualization Assignment",
+    "section": "Data / Source Note",
+    "text": "Data / Source Note\nThe PC Game System Requirements & Estimated FPS by GPU dataset by PCGameBenchmarks (2026) and can be found at https://zenodo.org/records/23162309?preview_file=games.csv or https://github.com/emilioagustin83/pc-game-fps-dataset.\nThe full citation is\nPCGameBenchmarks. (2026). PC Game System Requirements & Estimated FPS by GPU (Versions 2026-10-03) Dataset. Zenodo. https://doi.org/10.5281/zenodo.23162309"
+  }
+]
